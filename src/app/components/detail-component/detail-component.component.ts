@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import Highcharts from 'highcharts';
+import { ComponentsInteractionService } from '../../services/interaction/components-interaction.service';
+
 // import annotations from 'highcharts';
 
 @Component({
@@ -8,13 +10,21 @@ import Highcharts from 'highcharts';
   styleUrls: ['./detail-component.component.css']
 })
 export class DetailComponentComponent implements OnInit {
+ eventDetail: String;   
  myChart: any;
  hideChart1 = false;
  hideChart2 = true;
-  constructor() { }
+  constructor(private interaction : ComponentsInteractionService) {
+  }
 
   ngOnInit() {
     this.plotChart(this.stockMsci, 'MSCI All-Country World Equity Index');
+    this.interaction.passedValue$.subscribe(
+        //debugger;
+        value => {
+          this.eventDetail = value;
+          console.log(value);
+        });
   }
 plotChart(plotData, plotTitle): void {
 // Now create the chart
