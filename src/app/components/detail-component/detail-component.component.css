@@ -2,6 +2,7 @@
     margin: auto;
     padding-bottom: 15px;
     padding-top: 15px;
+    height: 100%;
 }
 .outer {
     display: table;
@@ -19,7 +20,22 @@
   .inner {
     margin-left: auto;
     margin-right: auto;
-    width: 50%;
+    width: 70%;
+    height: 70%;
     /*whatever width you want*/
+  }
+  .pageHeadding{
+    font-weight: 600; 
+    font-size: 1.5rem; 
+    margin: 15px; 
+    text-decoration: underline;
+    font-size: 1.5rem !important;
+  }
+  .selectOption{
+    margin-left: 10% !important;
+    width: 150px; 
+    border-radius: 5px; 
+    height: 32px;
+    outline: none;
   }
   

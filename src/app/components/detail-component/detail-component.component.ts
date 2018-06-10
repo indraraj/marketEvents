@@ -14,9 +14,9 @@ export class DetailComponentComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
-    this.plotChart();
+    this.plotChart(this.stockMsci, 'MSCI All-Country World Equity Index');
   }
-plotChart(): void {
+plotChart(plotData, plotTitle): void {
 // Now create the chart
 
 const myChart = Highcharts.chart('container', {
@@ -34,12 +34,12 @@ const myChart = Highcharts.chart('container', {
       enabled: false
    },
   title: {
-      text: 'MSCI All-Country World Equity Index'
+      text: plotTitle
   },
 
-  subtitle: {
-      text: '(MIWD00000PUS)'
-  },
+//   subtitle: {
+//       text: '(MIWD00000PUS)'
+//   },
 
   annotations: [{
     labelOptions: {
@@ -112,7 +112,7 @@ const myChart = Highcharts.chart('container', {
   },
 
   series: [{
-      data: this.elevationData,
+      data: plotData,
       lineColor: Highcharts.getOptions().colors[1],
       color: Highcharts.getOptions().colors[2],
       fillOpacity: 0.5,
@@ -125,63 +125,18 @@ const myChart = Highcharts.chart('container', {
 
 });
 }
-//   onSelect(userSelect: string): void {
-//       if (userSelect === 'market') {
-//         this.plotChart();
-//       } else {
-//         const myChart = Highcharts.chart('container', {
-
-//           title: {
-//               text: 'Highcharts Annotations'
-//           },
-//           subtitle: {
-//               text: 'Annotations connected to coordinates without data points'
-//           },
-
-//           series: [{
-//               data: [29.9, 71.5, 106.4, 129.2, 144.0, 176.0, 135.6, 148.5, 216.4, 194.1, 95.6, 54.4]
-//           }],
-
-//           xAxis: {
-//               tickInterval: 0.5,
-//               gridLineWidth: 1
-//           },
-
-//           annotations: [{
-//               labels: [{
-//                   point: {
-//                       x: 3,
-//                       y: 129.2,
-//                       xAxis: 0,
-//                       yAxis: 0
-//                   },
-//                   text: 'x: {x}<br/>y: {y}'
-//               },
-//               {
-//                   point: {
-//                       x: 0,
-//                       y: 0
-//                   },
-//                   text: 'x: {point.plotX} px<br/>y: {point.plotY} px'
-//               },
-//               {
-//                   point: {
-//                       x: 5,
-//                       y: 100,
-//                       xAxis: 0
-//                   },
-//                   text: 'x: {x}<br/>y: {point.plotY} px'
-//               }],
-//               labelOptions: {
-//                   x: 40, y: -10
-//               }
-//           }]
-//       });
-//       }
-// }
+  onSelect(userSelect: string): void {
+      if (userSelect === 'msci') {
+        this.plotChart(this.stockMsci, 'MSCI All-Country World Equity Index');
+      } else if(userSelect === 'gold'){
+        this.plotChart(this.commodityGold, 'Gold rate in Euro');
+      }else {
+        this.plotChart(this.commodityOil, 'Crude Oil rate in Euro');
+      }
+}
 
 // tslint:disable-next-line:member-ordering
-public elevationData = [
+public stockMsci = [
   [Date.UTC(2012, 7, 9), 309.48],
   [Date.UTC(2012, 8, 9), 323.16],
   [Date.UTC(2012, 9, 9), 331.76],
@@ -254,4 +209,150 @@ public elevationData = [
   [Date.UTC(2018, 4, 9), 504.18],
   [Date.UTC(2018, 5, 9), 513.16]
 ];
+public commodityGold = [
+    [Date.UTC(2012, 7, 9), 309.48],
+    [Date.UTC(2012, 8, 9), 323.16],
+    [Date.UTC(2012, 9, 9), 331.76],
+    [Date.UTC(2012, 10, 9), 331.76],
+    [Date.UTC(2012, 11, 9), 323.25],
+    [Date.UTC(2012, 12, 9), 335],
+    [Date.UTC(2013, 1, 9), 346.82],
+    [Date.UTC(2013, 2, 9), 355.86],
+    [Date.UTC(2013, 3, 9), 361.34],
+    [Date.UTC(2013, 4, 9), 358.92],
+    [Date.UTC(2013, 5, 9), 374.64],
+    [Date.UTC(2013, 6, 9), 365.92],
+    [Date.UTC(2013, 7, 9), 362.61],
+    [Date.UTC(2013, 8, 9), 376.83],
+    [Date.UTC(2013, 9, 9), 375.37],
+    [Date.UTC(2013, 10, 9), 377.59],
+    [Date.UTC(2013, 11, 9), 393.98],
+    [Date.UTC(2013, 12, 9), 399.43],
+    [Date.UTC(2014, 1, 9), 403.06],
+    [Date.UTC(2014, 2, 9), 394.88],
+    [Date.UTC(2014, 3, 9), 409.88],
+    [Date.UTC(2014, 4, 9), 412.22],
+    [Date.UTC(2014, 5, 9), 413.64],
+    [Date.UTC(2014, 6, 9), 427.04],
+    [Date.UTC(2014, 7, 9), 429.78],
+    [Date.UTC(2014, 8, 9), 416.94],
+    [Date.UTC(2014, 9, 9), 428.14],
+    [Date.UTC(2014, 10, 9), 407.02],
+    [Date.UTC(2014, 11, 9), 420.06],
+    [Date.UTC(2014, 12, 9), 420.22],
+    [Date.UTC(2015, 1, 9), 411.69],
+    [Date.UTC(2015, 2, 9), 418.86],
+    [Date.UTC(2015, 3, 9), 424.29],
+    [Date.UTC(2015, 4, 9), 434],
+    [Date.UTC(2015, 5, 9), 439.28],
+    [Date.UTC(2015, 6, 9), 426.95],
+    [Date.UTC(2015, 7, 9), 417.12],
+    [Date.UTC(2015, 8, 9), 426.35],
+    [Date.UTC(2015, 9, 9), 392.64],
+    [Date.UTC(2015, 10, 9), 404.81],
+    [Date.UTC(2015, 11, 9), 407.93],
+    [Date.UTC(2015, 12, 9), 399.76],
+    [Date.UTC(2016, 1, 9), 374.75],
+    [Date.UTC(2016, 2, 9), 358.46],
+    [Date.UTC(2016, 3, 9), 385.1],
+    [Date.UTC(2016, 4, 9), 393.83],
+    [Date.UTC(2016, 5, 9), 395.36],
+    [Date.UTC(2016, 6, 9), 407.1],
+    [Date.UTC(2016, 7, 9), 400.99],
+    [Date.UTC(2016, 8, 9), 418.86],
+    [Date.UTC(2016, 9, 9), 414.9],
+    [Date.UTC(2016, 10, 9), 417.83],
+    [Date.UTC(2016, 11, 9), 410.94],
+    [Date.UTC(2016, 12, 9), 424.56],
+    [Date.UTC(2017, 1, 9), 428.21],
+    [Date.UTC(2017, 2, 9), 437.23],
+    [Date.UTC(2017, 3, 9), 443.21],
+    [Date.UTC(2017, 4, 9), 447.36],
+    [Date.UTC(2017, 5, 9), 459.9],
+    [Date.UTC(2017, 6, 9), 466.84],
+    [Date.UTC(2017, 7, 9), 465.16],
+    [Date.UTC(2017, 8, 9), 477.89],
+    [Date.UTC(2017, 9, 9), 479.61],
+    [Date.UTC(2017, 10, 9), 490.11],
+    [Date.UTC(2017, 11, 9), 498.49],
+    [Date.UTC(2017, 12, 9), 504.08],
+    [Date.UTC(2018, 1, 9), 528.02],
+    [Date.UTC(2018, 2, 9), 500.51],
+    [Date.UTC(2018, 3, 9), 525.64],
+    [Date.UTC(2018, 4, 9), 504.18],
+    [Date.UTC(2018, 5, 9), 513.16]
+  ];
+  public commodityOil = [
+    [Date.UTC(2012, 7, 9), 409.48],
+    [Date.UTC(2012, 8, 9), 423.16],
+    [Date.UTC(2012, 9, 9), 431.76],
+    [Date.UTC(2012, 10, 9), 391.76],
+    [Date.UTC(2012, 11, 9), 383.25],
+    [Date.UTC(2012, 12, 9), 400.5],
+    [Date.UTC(2013, 1, 9), 446.82],
+    [Date.UTC(2013, 2, 9), 455.86],
+    [Date.UTC(2013, 3, 9), 481.34],
+    [Date.UTC(2013, 4, 9), 508.92],
+    [Date.UTC(2013, 5, 9), 526.64],
+    [Date.UTC(2013, 6, 9), 532.92],
+    [Date.UTC(2013, 7, 9), 562.61],
+    [Date.UTC(2013, 8, 9), 546.83],
+    [Date.UTC(2013, 9, 9), 505.37],
+    [Date.UTC(2013, 10, 9), 477.59],
+    [Date.UTC(2013, 11, 9), 463.98],
+    [Date.UTC(2013, 12, 9), 440.3],
+    [Date.UTC(2014, 1, 9), 423.06],
+    [Date.UTC(2014, 2, 9), 394.88],
+    [Date.UTC(2014, 3, 9), 409.88],
+    [Date.UTC(2014, 4, 9), 412.22],
+    [Date.UTC(2014, 5, 9), 413.64],
+    [Date.UTC(2014, 6, 9), 427.04],
+    [Date.UTC(2014, 7, 9), 429.78],
+    [Date.UTC(2014, 8, 9), 416.94],
+    [Date.UTC(2014, 9, 9), 428.14],
+    [Date.UTC(2014, 10, 9), 407.02],
+    [Date.UTC(2014, 11, 9), 420.06],
+    [Date.UTC(2014, 12, 9), 420.22],
+    [Date.UTC(2015, 1, 9), 411.69],
+    [Date.UTC(2015, 2, 9), 418.86],
+    [Date.UTC(2015, 3, 9), 424.29],
+    [Date.UTC(2015, 4, 9), 434],
+    [Date.UTC(2015, 5, 9), 439.28],
+    [Date.UTC(2015, 6, 9), 426.95],
+    [Date.UTC(2015, 7, 9), 417.12],
+    [Date.UTC(2015, 8, 9), 426.35],
+    [Date.UTC(2015, 9, 9), 392.64],
+    [Date.UTC(2015, 10, 9), 404.81],
+    [Date.UTC(2015, 11, 9), 407.93],
+    [Date.UTC(2015, 12, 9), 399.76],
+    [Date.UTC(2016, 1, 9), 374.75],
+    [Date.UTC(2016, 2, 9), 358.46],
+    [Date.UTC(2016, 3, 9), 385.1],
+    [Date.UTC(2016, 4, 9), 393.83],
+    [Date.UTC(2016, 5, 9), 395.36],
+    [Date.UTC(2016, 6, 9), 407.1],
+    [Date.UTC(2016, 7, 9), 400.99],
+    [Date.UTC(2016, 8, 9), 418.86],
+    [Date.UTC(2016, 9, 9), 414.9],
+    [Date.UTC(2016, 10, 9), 417.83],
+    [Date.UTC(2016, 11, 9), 410.94],
+    [Date.UTC(2016, 12, 9), 424.56],
+    [Date.UTC(2017, 1, 9), 428.21],
+    [Date.UTC(2017, 2, 9), 437.23],
+    [Date.UTC(2017, 3, 9), 443.21],
+    [Date.UTC(2017, 4, 9), 447.36],
+    [Date.UTC(2017, 5, 9), 459.9],
+    [Date.UTC(2017, 6, 9), 520.84],
+    [Date.UTC(2017, 7, 9), 465.16],
+    [Date.UTC(2017, 8, 9), 477.89],
+    [Date.UTC(2017, 9, 9), 579.61],
+    [Date.UTC(2017, 10, 9), 490.11],
+    [Date.UTC(2017, 11, 9), 498.49],
+    [Date.UTC(2017, 12, 9), 504.08],
+    [Date.UTC(2018, 1, 9), 600.02],
+    [Date.UTC(2018, 2, 9), 580.51],
+    [Date.UTC(2018, 3, 9), 625.64],
+    [Date.UTC(2018, 4, 9), 604.18],
+    [Date.UTC(2018, 5, 9), 613.16]
+  ];
 }
