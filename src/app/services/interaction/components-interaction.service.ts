@@ -1,19 +1,19 @@
 import { Injectable } from '@angular/core';
-import { Subject }    from 'rxjs';
+import { BehaviorSubject }    from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ComponentsInteractionService {
-  private passedValueSource = new Subject<string>();
+  private passedValueSource = new BehaviorSubject<string>(''); 
 
   constructor() { }
    // Observable string streams
   passedValue$ = this.passedValueSource.asObservable();
   
   // Service message commands
-  passedValue(mission: string) {
-    console.log(mission);
-    this.passedValueSource.next(mission);
+  public passedValue(value: string): void {
+    console.log(value);
+    this.passedValueSource.next(value);
   }
 }

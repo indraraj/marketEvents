@@ -5,12 +5,11 @@ import { ComponentsInteractionService } from '../../services/interaction/compone
 @Component({
   selector: 'app-incident-component',
   templateUrl: './incident-component.component.html',
-  styleUrls: ['./incident-component.component.css'],
-  providers: [ComponentsInteractionService]
+  styleUrls: ['./incident-component.component.css']
 })
 export class IncidentComponentComponent implements OnInit {
   
-  constructor(public interaction : ComponentsInteractionService) { 
+  constructor(private interaction : ComponentsInteractionService) { 
     
   }
  

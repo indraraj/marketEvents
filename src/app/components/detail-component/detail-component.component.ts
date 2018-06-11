@@ -15,16 +15,15 @@ export class DetailComponentComponent implements OnInit {
  hideChart1 = false;
  hideChart2 = true;
   constructor(private interaction : ComponentsInteractionService) {
-  }
-
-  ngOnInit() {
-    this.plotChart(this.stockMsci, 'MSCI All-Country World Equity Index');
     this.interaction.passedValue$.subscribe(
-        //debugger;
         value => {
           this.eventDetail = value;
           console.log(value);
         });
+  }
+
+  ngOnInit() {
+    this.plotChart(this.stockMsci, 'MSCI All-Country World Equity Index');
   }
 plotChart(plotData, plotTitle): void {
 // Now create the chart
