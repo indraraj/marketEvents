@@ -50,42 +50,53 @@ const myChart = Highcharts.chart('container', {
 //       text: '(MIWD00000PUS)'
 //   },
 
-  annotations: [{
-    labelOptions: {
-        backgroundColor: 'rgba(255,255,255,0.5)',
-        verticalAlign: 'top',
-        y: 15
-    },
-    labels: [{
-        point: {
-            xAxis: 0,
-            yAxis: 0,
-            x: Date.UTC(2012, 7, 9),
-            y: 309.48
-        },
-        text: 'Arbois'
-    }]
-}, {
-    labelOptions: {
-        shape: 'connector',
-        align: 'right',
-        justify: false,
-        crop: true,
-        style: {
-            fontSize: '0.8em',
-            textOutline: '1px white'
-        }
-    },
-    labels: [{
-        point: {
-            xAxis: 0,
-            yAxis: 0,
-            x: Date.UTC(2012, 7, 9),
-            y: 309.48
-        },
-        text: '6.1 km climb<br>4.6% on avg.'
-    }]
-}],
+//   annotations: [{
+//     labelOptions: {
+//         backgroundColor: 'rgba(255,255,255,0.5)',
+//         verticalAlign: 'top',
+//         y: 15
+//     },
+//     labels: [{
+//         point: {
+//             xAxis: 0,
+//             yAxis: 0,
+//             x: Date.UTC(2012, 7, 9),
+//             y: 309.48
+//         },
+//         text: 'Arbois'
+//     }]
+// }, {
+//     labelOptions: {
+//         shape: 'connector',
+//         align: 'right',
+//         justify: false,
+//         crop: true,
+//         style: {
+//             fontSize: '0.8em',
+//             textOutline: '1px white'
+//         }
+//     },
+//     labels: [{
+//         point: {
+//             xAxis: 0,
+//             yAxis: 0,
+//             x: Date.UTC(2012, 7, 9),
+//             y: 309.48
+//         },
+//         text: '6.1 km climb<br>4.6% on avg.'
+//     }]
+// }],
+    annotations: [{
+        //visible: true, by default the annotation is visible
+        labels: [{
+            point: Date.UTC(2012, 7, 9)
+        }]
+    }, {
+        visible: true,
+        labels: [{
+            point: Date.UTC(2013, 4, 9)
+        }]
+    }],
 
   xAxis: {
     type: 'datetime',
