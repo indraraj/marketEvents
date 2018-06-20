@@ -1,8 +1,8 @@
 .myclass{
     margin: auto;
     padding-bottom: 15px;
-    padding-top: 15px;
-    height: 100%;
+    padding-top: 2px;
+    height: 90%;
 }
 .outer {
     display: table;
@@ -32,9 +32,8 @@
     font-size: 1.5rem !important;
   }
   .selectOption{
-    margin-left: 10% !important;
-    width: 150px; 
-    border-radius: 5px; 
+    width: 100%; 
+    border: none; 
     height: 32px;
     outline: none;
   }

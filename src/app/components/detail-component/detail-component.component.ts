@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import Highcharts from 'highcharts';
+import Annotations from 'highcharts/modules/annotations';
 import { ComponentsInteractionService } from '../../services/interaction/components-interaction.service';
 
-// import annotations from 'highcharts';
+Annotations(Highcharts)
 
 @Component({
   selector: 'app-detail-component',
@@ -23,9 +24,9 @@ export class DetailComponentComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.plotChart(this.stockMsci, 'MSCI All-Country World Equity Index');
+    this.plotChart(this.stockMsci, 'MSCI All-Country World Equity Index', 'index value');
   }
-plotChart(plotData, plotTitle): void {
+plotChart(plotData, plotTitle, ylabel): void {
 // Now create the chart
 
 const myChart = Highcharts.chart('container', {
@@ -50,53 +51,59 @@ const myChart = Highcharts.chart('container', {
 //       text: '(MIWD00000PUS)'
 //   },
 
-//   annotations: [{
-//     labelOptions: {
-//         backgroundColor: 'rgba(255,255,255,0.5)',
-//         verticalAlign: 'top',
-//         y: 15
-//     },
-//     labels: [{
-//         point: {
-//             xAxis: 0,
-//             yAxis: 0,
-//             x: Date.UTC(2012, 7, 9),
-//             y: 309.48
-//         },
-//         text: 'Arbois'
-//     }]
-// }, {
-//     labelOptions: {
-//         shape: 'connector',
-//         align: 'right',
-//         justify: false,
-//         crop: true,
-//         style: {
-//             fontSize: '0.8em',
-//             textOutline: '1px white'
-//         }
-//     },
-//     labels: [{
-//         point: {
-//             xAxis: 0,
-//             yAxis: 0,
-//             x: Date.UTC(2012, 7, 9),
-//             y: 309.48
-//         },
-//         text: '6.1 km climb<br>4.6% on avg.'
-//     }]
-// }],
-    annotations: [{
-        //visible: true, by default the annotation is visible
-        labels: [{
-            point: Date.UTC(2012, 7, 9)
-        }]
-    }, {
-        visible: true,
-        labels: [{
-            point: Date.UTC(2013, 4, 9)
-        }]
-    }],
+  annotations: [{
+    labelOptions: {
+        backgroundColor: 'rgba(255,255,255,0.5)',
+        verticalAlign: 'top',
+        y: 15
+    },
+    labels: [{
+        point: {
+            xAxis: 0,
+            yAxis: 0,
+            x: Date.UTC(2015, 12, 9),
+            y: 399.76
+        },
+        text: 'Arbois'
+    }]
+},
+{
+    labels: [{
+        point: {
+            xAxis: 0,
+            yAxis: 0,
+            x: Date.UTC(2017, 6, 9),
+            y: 466.84
+        },
+        text: 'Montée de la Combe<br>de Laisia Les Molunes'
+    }]
+}, {
+    labelOptions: {
+        shape: 'connector',
+        align: 'right',
+        justify: false,
+        crop: true,
+        style: {
+            fontSize: '0.8em',
+            textOutline: '1px white'
+        }
+    },
+    labels: [{
+        point: {
+            xAxis: 0,
+            yAxis: 0,
+            x: Date.UTC(2014, 3, 9),
+            y: 409.88
+        },
+        text: '6.1 km climb<br>4.6% on avg.'
+    }]
+}],
+        // annotations: [{
+        //     labels: [{
+        //         point: { x: Date.UTC(2012, 11, 9), y: 323.25 },
+        //         text: 'Label'
+        //     }]
+        // }],
 
   xAxis: {
     type: 'datetime',
@@ -105,7 +112,7 @@ const myChart = Highcharts.chart('container', {
     year: '%Y'
     },
     title: {
-        text: 'Date'
+        text: 'Dates  ------>'
     }
   },
 
@@ -114,7 +121,7 @@ const myChart = Highcharts.chart('container', {
       endOnTick: false,
       maxPadding: 0.35,
       title: {
-          text: null
+          text: ylabel
       },
       labels: {
           format: '{value}'
@@ -147,11 +154,11 @@ const myChart = Highcharts.chart('container', {
 }
   onSelect(userSelect: string): void {
       if (userSelect === 'msci') {
-        this.plotChart(this.stockMsci, 'MSCI All-Country World Equity Index');
+        this.plotChart(this.stockMsci, 'MSCI All-Country World Equity Index', 'index value');
       } else if(userSelect === 'gold'){
-        this.plotChart(this.commodityGold, 'Gold rate in Euro');
+        this.plotChart(this.commodityGold, 'Gold rate in Euro', 'Gold Rate in £');
       }else {
-        this.plotChart(this.commodityOil, 'Crude Oil rate in Euro');
+        this.plotChart(this.commodityOil, 'Crude Oil rate in Euro', 'Crude Oil Rate in £');
       }
 }
 

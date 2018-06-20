@@ -2,17 +2,18 @@
   <!-- Tab panes -->
 
   <div class="tab-content middle">
-      <select [disabled]="!hideChart2" class="selectOption" (change)="onSelect($event.target.value)">
-        <option disabled>Stocks</option>  
-        <option value="msci" selected="selected"> &nbsp;&nbsp; - &nbsp; MSCI</option>
-        <option disabled>Commudity</option>
-        <option value="gold"> &nbsp;&nbsp; - &nbsp; Gold</option>
-        <option value="oil"> &nbsp;&nbsp; - &nbsp; Crude Oil</option>
-        </select>
+      
         <div style="text-align: center;">
             <span class="w3-bar-item" style="color: white; font-size: 1.5em;"> {{eventDetail}} </span>
         </div>
       <div class="inner">
+          <select [disabled]="!hideChart2" class="selectOption" (change)="onSelect($event.target.value)">
+              <option disabled>Stocks</option>  
+              <option value="msci" selected="selected"> &nbsp;&nbsp; - &nbsp; MSCI All-Country World Equity Index</option>
+              <option disabled>commodity</option>
+              <option value="gold"> &nbsp;&nbsp; - &nbsp; Gold</option>
+              <option value="oil"> &nbsp;&nbsp; - &nbsp; Crude Oil</option>
+              </select>
         <div class="row myclass">
           <div id="container" style="width:100%; height:100%" [hidden]="hideChart1"></div>
           <div style="width:100%; height:100%; background-color: white; text-align: center" [hidden]="hideChart2">
