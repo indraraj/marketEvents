@@ -12,6 +12,7 @@ Annotations(Highcharts)
 })
 export class DetailComponentComponent implements OnInit {
  eventDetail: String;   
+ eventDescription: String;
  myChart: any;
  hideChart1 = false;
  hideChart2 = true;
@@ -19,12 +20,18 @@ export class DetailComponentComponent implements OnInit {
     this.interaction.passedValue$.subscribe(
         value => {
           this.eventDetail = value;
-          console.log(value);
         });
   }
 
   ngOnInit() {
     this.plotChart(this.stockMsci, 'MSCI All-Country World Equity Index', 'index value');
+    if(this.eventDetail === 'Global Recession') {
+    this.eventDescription = 'The Great Recession was related to the financial crisis of 2007–08 and U.S. subprime mortgage crisis of 2007–09. The Great Recession resulted in the scarcity of valuable assets in the market economy and the collapse of the financial sector (banks) in the world economy. The banks were then bailed out by the U.S. government';
+    } else if(this.eventDetail === 'Euro Dedt Crisis') {
+    this.eventDescription = 'The European debt crisis is a multi-year debt crisis that has been taking place in the European Union since the end of 2009. Several eurozone member states (Greece, Portugal, Ireland, Spain and Cyprus) were unable to repay or refinance their government debt or to bail out over-indebted banks under their national supervision without the assistance of third parties like other Eurozone countries, the European Central Bank (ECB), or the International Monetary Fund (IMF)';
+    } else {
+    this.eventDescription = 'Brexit is the prospective withdrawal of the United Kingdom from the European Union. In a referendum on 23 June 2016, 51.9% of the participating UK electorate voted to leave the EU, out of a turnout of 72.2%';
+    }
   }
 plotChart(plotData, plotTitle, ylabel): void {
 // Now create the chart
@@ -64,7 +71,7 @@ const myChart = Highcharts.chart('container', {
             x: Date.UTC(2015, 12, 9),
             y: 399.76
         },
-        text: 'Arbois'
+        text: 'Trump Win'
     }]
 },
 {
@@ -75,7 +82,7 @@ const myChart = Highcharts.chart('container', {
             x: Date.UTC(2017, 6, 9),
             y: 466.84
         },
-        text: 'Montée de la Combe<br>de Laisia Les Molunes'
+        text: 'Amazon Buys Whole Foods'
     }]
 }, {
     labelOptions: {
@@ -95,7 +102,7 @@ const myChart = Highcharts.chart('container', {
             x: Date.UTC(2014, 3, 9),
             y: 409.88
         },
-        text: '6.1 km climb<br>4.6% on avg.'
+        text: 'Disasters on Malaysian Airlines'
     }]
 }],
         // annotations: [{
