@@ -1,9 +1,17 @@
 import { Component, OnInit } from '@angular/core';
-import Highcharts from 'highcharts';
+import Highcharts from 'highcharts/highstock';
 import Annotations from 'highcharts/modules/annotations';
 import { ComponentsInteractionService } from '../../services/interaction/components-interaction.service';
+import {MarketData} from '../data/msciModel';
+import {FtseData} from '../data/ftseModel';
 
-Annotations(Highcharts)
+
+Annotations(Highcharts);
+Highcharts.createElement('link', {
+  href: 'https://fonts.googleapis.com/css?family=Unica+One',
+  rel: 'stylesheet',
+  type: 'text/css'
+}, null, document.getElementsByTagName('head')[0]);
 
 @Component({
   selector: 'app-detail-component',
@@ -11,12 +19,17 @@ Annotations(Highcharts)
   styleUrls: ['./detail-component.component.css']
 })
 export class DetailComponentComponent implements OnInit {
- eventDetail: String;   
+ eventDetail: String;
  eventDescription: String;
  myChart: any;
+ chartPlot: any;
+
  hideChart1 = false;
  hideChart2 = true;
-  constructor(private interaction : ComponentsInteractionService) {
+
+ plotname: any = ['GGL'];
+
+  constructor(private interaction: ComponentsInteractionService) {
     this.interaction.passedValue$.subscribe(
         value => {
           this.eventDetail = value;
@@ -24,369 +37,89 @@ export class DetailComponentComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.plotChart(this.stockMsci, 'MSCI All-Country World Equity Index', 'index value');
-    if(this.eventDetail === 'Global Recession') {
+    this.chartPlot = [{
+      name: 'AAPL',
+      data:  this.stockMsci,
+      // tooltip: {
+      //     valueDecimals: 2
+      // }
+    }];
+    this.plotChart(this.chartPlot);
+    if (this.eventDetail === 'Global Recession') {
+    // tslint:disable-next-line:max-line-length
     this.eventDescription = 'The Great Recession was related to the financial crisis of 2007–08 and U.S. subprime mortgage crisis of 2007–09. The Great Recession resulted in the scarcity of valuable assets in the market economy and the collapse of the financial sector (banks) in the world economy. The banks were then bailed out by the U.S. government';
-    } else if(this.eventDetail === 'Euro Dedt Crisis') {
+    } else if (this.eventDetail === 'Euro debt Crisis') {
+    // tslint:disable-next-line:max-line-length
     this.eventDescription = 'The European debt crisis is a multi-year debt crisis that has been taking place in the European Union since the end of 2009. Several eurozone member states (Greece, Portugal, Ireland, Spain and Cyprus) were unable to repay or refinance their government debt or to bail out over-indebted banks under their national supervision without the assistance of third parties like other Eurozone countries, the European Central Bank (ECB), or the International Monetary Fund (IMF)';
     } else {
+    // tslint:disable-next-line:max-line-length
     this.eventDescription = 'Brexit is the prospective withdrawal of the United Kingdom from the European Union. In a referendum on 23 June 2016, 51.9% of the participating UK electorate voted to leave the EU, out of a turnout of 72.2%';
     }
   }
-plotChart(plotData, plotTitle, ylabel): void {
+
+  addcompare() {
+    console.log('button cloecked');
+    const newChart = {
+      name: 'GGN',
+      data: this.ftseData,
+      // tooltip: {
+      //   valueDecimals: 2
+      //  }
+    };
+    this.chartPlot.push(newChart);
+    console.log(this.chartPlot);
+    this.plotChart(this.chartPlot);
+  }
+
+plotChart(plotDatal): void {
 // Now create the chart
 
-const myChart = Highcharts.chart('container', {
-
-  chart: {
-      type: 'area',
-      zoomType: 'xy',
-      panning: true,
-      panKey: 'shift',
-      scrollablePlotArea: {
-          minWidth: 600
-      }
-  },
-  credits: {
-      enabled: false
-   },
-  title: {
-      text: plotTitle
-  },
-
-//   subtitle: {
-//       text: '(MIWD00000PUS)'
-//   },
-
-  annotations: [{
-    labelOptions: {
-        backgroundColor: 'rgba(255,255,255,0.5)',
-        verticalAlign: 'top',
-        y: 15
+const myChart = Highcharts.stockChart('container', {
+    chart: {
+      type: 'line'
     },
-    labels: [{
-        point: {
-            xAxis: 0,
-            yAxis: 0,
-            x: Date.UTC(2015, 12, 9),
-            y: 399.76
-        },
-        text: 'Trump Win'
-    }]
-},
-{
-    labels: [{
-        point: {
-            xAxis: 0,
-            yAxis: 0,
-            x: Date.UTC(2017, 6, 9),
-            y: 466.84
-        },
-        text: 'Amazon Buys Whole Foods'
-    }]
-}, {
-    labelOptions: {
-        shape: 'connector',
-        align: 'right',
-        justify: false,
-        crop: true,
-        style: {
-            fontSize: '0.8em',
-            textOutline: '1px white'
-        }
+    rangeSelector: {
+        selected: 0,
     },
-    labels: [{
-        point: {
-            xAxis: 0,
-            yAxis: 0,
-            x: Date.UTC(2014, 3, 9),
-            y: 409.88
-        },
-        text: 'Disasters on Malaysian Airlines'
-    }]
-}],
-        // annotations: [{
-        //     labels: [{
-        //         point: { x: Date.UTC(2012, 11, 9), y: 323.25 },
-        //         text: 'Label'
-        //     }]
-        // }],
 
-  xAxis: {
-    type: 'datetime',
-    dateTimeLabelFormats: {
-    month: '%b \'%y',
-    year: '%Y'
-    },
     title: {
-        text: 'Dates  ------>'
-    }
-  },
-
-  yAxis: {
-      startOnTick: true,
-      endOnTick: false,
-      maxPadding: 0.35,
-      title: {
-          text: ylabel
-      },
-      labels: {
-          format: '{value}'
+        text: 'AAPL Stock Price'
+    },
+    plotOptions: {
+      series: {
+          compare: 'percent',
+          showInNavigator: true
       }
+    },
+    tooltip: {
+      pointFormat: '<span style="color:{series.color}">{series.name}</span>: <b>{point.y}</b> ({point.change}%)<br/>',
+      valueDecimals: 2,
+      split: true
   },
-
-  tooltip: {
-      headerFormat: 'MSCI World Equity Index:<br>',
-      pointFormat: '{point.x:%b \'%y} : {point.y}',
-      shared: true
-  },
-
-  legend: {
-      enabled: false
-  },
-
-  series: [{
-      data: plotData,
-      lineColor: Highcharts.getOptions().colors[1],
-      color: Highcharts.getOptions().colors[2],
-      fillOpacity: 0.5,
-      name: 'Elevation',
-      marker: {
-          enabled: false
-      },
-      threshold: null
-  }]
-
+    series: plotDatal
 });
 }
   onSelect(userSelect: string): void {
       if (userSelect === 'msci') {
-        this.plotChart(this.stockMsci, 'MSCI All-Country World Equity Index', 'index value');
-      } else if(userSelect === 'gold'){
-        this.plotChart(this.commodityGold, 'Gold rate in Euro', 'Gold Rate in £');
-      }else {
-        this.plotChart(this.commodityOil, 'Crude Oil rate in Euro', 'Crude Oil Rate in £');
+        this.chartPlot = [{
+          name: 'AAPL',
+          data:  this.stockMsci,
+          // tooltip: {
+          //     valueDecimals: 2
+          // }
+        }];
+        this.plotChart(this.chartPlot);
+      } else if (userSelect === 'gold') {
+        //this.plotChart(this.ftseData, this.plotname, 'Gold Rate in £');
+      } else {
+        //this.plotChart(this.commodityOil, this.plotname, 'Crude Oil Rate in £');
       }
 }
 
 // tslint:disable-next-line:member-ordering
-public stockMsci = [
-  [Date.UTC(2012, 7, 9), 309.48],
-  [Date.UTC(2012, 8, 9), 323.16],
-  [Date.UTC(2012, 9, 9), 331.76],
-  [Date.UTC(2012, 10, 9), 331.76],
-  [Date.UTC(2012, 11, 9), 323.25],
-  [Date.UTC(2012, 12, 9), 335],
-  [Date.UTC(2013, 1, 9), 346.82],
-  [Date.UTC(2013, 2, 9), 355.86],
-  [Date.UTC(2013, 3, 9), 361.34],
-  [Date.UTC(2013, 4, 9), 358.92],
-  [Date.UTC(2013, 5, 9), 374.64],
-  [Date.UTC(2013, 6, 9), 365.92],
-  [Date.UTC(2013, 7, 9), 362.61],
-  [Date.UTC(2013, 8, 9), 376.83],
-  [Date.UTC(2013, 9, 9), 375.37],
-  [Date.UTC(2013, 10, 9), 377.59],
-  [Date.UTC(2013, 11, 9), 393.98],
-  [Date.UTC(2013, 12, 9), 399.43],
-  [Date.UTC(2014, 1, 9), 403.06],
-  [Date.UTC(2014, 2, 9), 394.88],
-  [Date.UTC(2014, 3, 9), 409.88],
-  [Date.UTC(2014, 4, 9), 412.22],
-  [Date.UTC(2014, 5, 9), 413.64],
-  [Date.UTC(2014, 6, 9), 427.04],
-  [Date.UTC(2014, 7, 9), 429.78],
-  [Date.UTC(2014, 8, 9), 416.94],
-  [Date.UTC(2014, 9, 9), 428.14],
-  [Date.UTC(2014, 10, 9), 407.02],
-  [Date.UTC(2014, 11, 9), 420.06],
-  [Date.UTC(2014, 12, 9), 420.22],
-  [Date.UTC(2015, 1, 9), 411.69],
-  [Date.UTC(2015, 2, 9), 418.86],
-  [Date.UTC(2015, 3, 9), 424.29],
-  [Date.UTC(2015, 4, 9), 434],
-  [Date.UTC(2015, 5, 9), 439.28],
-  [Date.UTC(2015, 6, 9), 426.95],
-  [Date.UTC(2015, 7, 9), 417.12],
-  [Date.UTC(2015, 8, 9), 426.35],
-  [Date.UTC(2015, 9, 9), 392.64],
-  [Date.UTC(2015, 10, 9), 404.81],
-  [Date.UTC(2015, 11, 9), 407.93],
-  [Date.UTC(2015, 12, 9), 399.76],
-  [Date.UTC(2016, 1, 9), 374.75],
-  [Date.UTC(2016, 2, 9), 358.46],
-  [Date.UTC(2016, 3, 9), 385.1],
-  [Date.UTC(2016, 4, 9), 393.83],
-  [Date.UTC(2016, 5, 9), 395.36],
-  [Date.UTC(2016, 6, 9), 407.1],
-  [Date.UTC(2016, 7, 9), 400.99],
-  [Date.UTC(2016, 8, 9), 418.86],
-  [Date.UTC(2016, 9, 9), 414.9],
-  [Date.UTC(2016, 10, 9), 417.83],
-  [Date.UTC(2016, 11, 9), 410.94],
-  [Date.UTC(2016, 12, 9), 424.56],
-  [Date.UTC(2017, 1, 9), 428.21],
-  [Date.UTC(2017, 2, 9), 437.23],
-  [Date.UTC(2017, 3, 9), 443.21],
-  [Date.UTC(2017, 4, 9), 447.36],
-  [Date.UTC(2017, 5, 9), 459.9],
-  [Date.UTC(2017, 6, 9), 466.84],
-  [Date.UTC(2017, 7, 9), 465.16],
-  [Date.UTC(2017, 8, 9), 477.89],
-  [Date.UTC(2017, 9, 9), 479.61],
-  [Date.UTC(2017, 10, 9), 490.11],
-  [Date.UTC(2017, 11, 9), 498.49],
-  [Date.UTC(2017, 12, 9), 504.08],
-  [Date.UTC(2018, 1, 9), 528.02],
-  [Date.UTC(2018, 2, 9), 500.51],
-  [Date.UTC(2018, 3, 9), 525.64],
-  [Date.UTC(2018, 4, 9), 504.18],
-  [Date.UTC(2018, 5, 9), 513.16]
-];
-public commodityGold = [
-    [Date.UTC(2012, 7, 9), 309.48],
-    [Date.UTC(2012, 8, 9), 323.16],
-    [Date.UTC(2012, 9, 9), 331.76],
-    [Date.UTC(2012, 10, 9), 331.76],
-    [Date.UTC(2012, 11, 9), 323.25],
-    [Date.UTC(2012, 12, 9), 335],
-    [Date.UTC(2013, 1, 9), 346.82],
-    [Date.UTC(2013, 2, 9), 355.86],
-    [Date.UTC(2013, 3, 9), 361.34],
-    [Date.UTC(2013, 4, 9), 358.92],
-    [Date.UTC(2013, 5, 9), 374.64],
-    [Date.UTC(2013, 6, 9), 365.92],
-    [Date.UTC(2013, 7, 9), 362.61],
-    [Date.UTC(2013, 8, 9), 376.83],
-    [Date.UTC(2013, 9, 9), 375.37],
-    [Date.UTC(2013, 10, 9), 377.59],
-    [Date.UTC(2013, 11, 9), 393.98],
-    [Date.UTC(2013, 12, 9), 399.43],
-    [Date.UTC(2014, 1, 9), 403.06],
-    [Date.UTC(2014, 2, 9), 394.88],
-    [Date.UTC(2014, 3, 9), 409.88],
-    [Date.UTC(2014, 4, 9), 412.22],
-    [Date.UTC(2014, 5, 9), 413.64],
-    [Date.UTC(2014, 6, 9), 427.04],
-    [Date.UTC(2014, 7, 9), 429.78],
-    [Date.UTC(2014, 8, 9), 416.94],
-    [Date.UTC(2014, 9, 9), 428.14],
-    [Date.UTC(2014, 10, 9), 407.02],
-    [Date.UTC(2014, 11, 9), 420.06],
-    [Date.UTC(2014, 12, 9), 420.22],
-    [Date.UTC(2015, 1, 9), 411.69],
-    [Date.UTC(2015, 2, 9), 418.86],
-    [Date.UTC(2015, 3, 9), 424.29],
-    [Date.UTC(2015, 4, 9), 434],
-    [Date.UTC(2015, 5, 9), 439.28],
-    [Date.UTC(2015, 6, 9), 426.95],
-    [Date.UTC(2015, 7, 9), 417.12],
-    [Date.UTC(2015, 8, 9), 426.35],
-    [Date.UTC(2015, 9, 9), 392.64],
-    [Date.UTC(2015, 10, 9), 404.81],
-    [Date.UTC(2015, 11, 9), 407.93],
-    [Date.UTC(2015, 12, 9), 399.76],
-    [Date.UTC(2016, 1, 9), 374.75],
-    [Date.UTC(2016, 2, 9), 358.46],
-    [Date.UTC(2016, 3, 9), 385.1],
-    [Date.UTC(2016, 4, 9), 393.83],
-    [Date.UTC(2016, 5, 9), 395.36],
-    [Date.UTC(2016, 6, 9), 407.1],
-    [Date.UTC(2016, 7, 9), 400.99],
-    [Date.UTC(2016, 8, 9), 418.86],
-    [Date.UTC(2016, 9, 9), 414.9],
-    [Date.UTC(2016, 10, 9), 417.83],
-    [Date.UTC(2016, 11, 9), 410.94],
-    [Date.UTC(2016, 12, 9), 424.56],
-    [Date.UTC(2017, 1, 9), 428.21],
-    [Date.UTC(2017, 2, 9), 437.23],
-    [Date.UTC(2017, 3, 9), 443.21],
-    [Date.UTC(2017, 4, 9), 447.36],
-    [Date.UTC(2017, 5, 9), 459.9],
-    [Date.UTC(2017, 6, 9), 466.84],
-    [Date.UTC(2017, 7, 9), 465.16],
-    [Date.UTC(2017, 8, 9), 477.89],
-    [Date.UTC(2017, 9, 9), 479.61],
-    [Date.UTC(2017, 10, 9), 490.11],
-    [Date.UTC(2017, 11, 9), 498.49],
-    [Date.UTC(2017, 12, 9), 504.08],
-    [Date.UTC(2018, 1, 9), 528.02],
-    [Date.UTC(2018, 2, 9), 500.51],
-    [Date.UTC(2018, 3, 9), 525.64],
-    [Date.UTC(2018, 4, 9), 504.18],
-    [Date.UTC(2018, 5, 9), 513.16]
-  ];
-  public commodityOil = [
-    [Date.UTC(2012, 7, 9), 409.48],
-    [Date.UTC(2012, 8, 9), 423.16],
-    [Date.UTC(2012, 9, 9), 431.76],
-    [Date.UTC(2012, 10, 9), 391.76],
-    [Date.UTC(2012, 11, 9), 383.25],
-    [Date.UTC(2012, 12, 9), 400.5],
-    [Date.UTC(2013, 1, 9), 446.82],
-    [Date.UTC(2013, 2, 9), 455.86],
-    [Date.UTC(2013, 3, 9), 481.34],
-    [Date.UTC(2013, 4, 9), 508.92],
-    [Date.UTC(2013, 5, 9), 526.64],
-    [Date.UTC(2013, 6, 9), 532.92],
-    [Date.UTC(2013, 7, 9), 562.61],
-    [Date.UTC(2013, 8, 9), 546.83],
-    [Date.UTC(2013, 9, 9), 505.37],
-    [Date.UTC(2013, 10, 9), 477.59],
-    [Date.UTC(2013, 11, 9), 463.98],
-    [Date.UTC(2013, 12, 9), 440.3],
-    [Date.UTC(2014, 1, 9), 423.06],
-    [Date.UTC(2014, 2, 9), 394.88],
-    [Date.UTC(2014, 3, 9), 409.88],
-    [Date.UTC(2014, 4, 9), 412.22],
-    [Date.UTC(2014, 5, 9), 413.64],
-    [Date.UTC(2014, 6, 9), 427.04],
-    [Date.UTC(2014, 7, 9), 429.78],
-    [Date.UTC(2014, 8, 9), 416.94],
-    [Date.UTC(2014, 9, 9), 428.14],
-    [Date.UTC(2014, 10, 9), 407.02],
-    [Date.UTC(2014, 11, 9), 420.06],
-    [Date.UTC(2014, 12, 9), 420.22],
-    [Date.UTC(2015, 1, 9), 411.69],
-    [Date.UTC(2015, 2, 9), 418.86],
-    [Date.UTC(2015, 3, 9), 424.29],
-    [Date.UTC(2015, 4, 9), 434],
-    [Date.UTC(2015, 5, 9), 439.28],
-    [Date.UTC(2015, 6, 9), 426.95],
-    [Date.UTC(2015, 7, 9), 417.12],
-    [Date.UTC(2015, 8, 9), 426.35],
-    [Date.UTC(2015, 9, 9), 392.64],
-    [Date.UTC(2015, 10, 9), 404.81],
-    [Date.UTC(2015, 11, 9), 407.93],
-    [Date.UTC(2015, 12, 9), 399.76],
-    [Date.UTC(2016, 1, 9), 374.75],
-    [Date.UTC(2016, 2, 9), 358.46],
-    [Date.UTC(2016, 3, 9), 385.1],
-    [Date.UTC(2016, 4, 9), 393.83],
-    [Date.UTC(2016, 5, 9), 395.36],
-    [Date.UTC(2016, 6, 9), 407.1],
-    [Date.UTC(2016, 7, 9), 400.99],
-    [Date.UTC(2016, 8, 9), 418.86],
-    [Date.UTC(2016, 9, 9), 414.9],
-    [Date.UTC(2016, 10, 9), 417.83],
-    [Date.UTC(2016, 11, 9), 410.94],
-    [Date.UTC(2016, 12, 9), 424.56],
-    [Date.UTC(2017, 1, 9), 428.21],
-    [Date.UTC(2017, 2, 9), 437.23],
-    [Date.UTC(2017, 3, 9), 443.21],
-    [Date.UTC(2017, 4, 9), 447.36],
-    [Date.UTC(2017, 5, 9), 459.9],
-    [Date.UTC(2017, 6, 9), 520.84],
-    [Date.UTC(2017, 7, 9), 465.16],
-    [Date.UTC(2017, 8, 9), 477.89],
-    [Date.UTC(2017, 9, 9), 579.61],
-    [Date.UTC(2017, 10, 9), 490.11],
-    [Date.UTC(2017, 11, 9), 498.49],
-    [Date.UTC(2017, 12, 9), 504.08],
-    [Date.UTC(2018, 1, 9), 600.02],
-    [Date.UTC(2018, 2, 9), 580.51],
-    [Date.UTC(2018, 3, 9), 625.64],
-    [Date.UTC(2018, 4, 9), 604.18],
-    [Date.UTC(2018, 5, 9), 613.16]
-  ];
+public stockMsci = MarketData.msciData;
+// tslint:disable-next-line:member-ordering
+public ftseData = FtseData.ftseData;
+  // tslint:disable-next-line:member-ordering
+  public commodityOil = [];
 }

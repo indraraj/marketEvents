@@ -32,7 +32,13 @@
     font-size: 1.5rem !important;
   }
   .selectOption{
-    width: 100%; 
+    background-color: #fff;
+    border: none; 
+    height: 32px;
+    outline: none;
+  }
+  .addCompare1{
+    background-color: #fff;
     border: none; 
     height: 32px;
     outline: none;
