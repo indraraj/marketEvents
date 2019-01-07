@@ -1,8 +1,8 @@
 .myclass{
-    margin: auto;
+     margin: auto;
     padding-bottom: 15px;
     padding-top: 2px;
-    height: 90%;
+  /*   height: 90%; */
 }
 .outer {
     display: table;
@@ -19,8 +19,8 @@
   
   .inner {
     margin-left: auto;
-    margin-right: auto;
-    width: 70%;
+    margin-right: auto; 
+    width: 85%;
     height: 70%;
     /*whatever width you want*/
   }
@@ -42,5 +42,11 @@
     border: none; 
     height: 32px;
     outline: none;
+  }
+  .modal-dialog{
+    top: 24% !important;
+  }
+  .btn_hov :hover{
+    color: #0081f2;
   }
   

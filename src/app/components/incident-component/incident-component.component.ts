@@ -8,16 +8,16 @@ import { ComponentsInteractionService } from '../../services/interaction/compone
   styleUrls: ['./incident-component.component.css']
 })
 export class IncidentComponentComponent implements OnInit {
-  
-  constructor(private interaction : ComponentsInteractionService) { 
-    
+
+  constructor(private interaction: ComponentsInteractionService) {
+
   }
- 
+
   ngOnInit() {
   }
 
   eventClicked(value: string) {
   this.interaction.passedValue(value);
-    console.log(value);
+    // console.log(value);
   }
 }

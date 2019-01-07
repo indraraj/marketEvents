@@ -1,5 +1,5 @@
-export class MarketData {
-    public static msciData = [
+export class CopperData {
+    public static copperData = [
       [Date.UTC(2017, 0 , 1 ),	475.30],
       [Date.UTC(2017, 0 , 2 ),	477.58],
       [Date.UTC(2017, 0 , 3 ),	477.68],

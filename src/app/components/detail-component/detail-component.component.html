@@ -1,56 +1,86 @@
 <div class="outer">
   <!-- Tab panes -->
-
   <div class="tab-content middle">
-      
-        <div style="text-align: center;">
-            <span class="w3-bar-item" style="color: white; font-size: 1.5em;"> {{eventDetail}} </span>
+    <div style="text-align: center;">
+      <span class="w3-bar-item" style="color: white; font-size: 1.5em;"> {{eventDetail}} </span>
+    </div>
+    <div class="inner">
+      <div class="row">
+        <div class="col-md-6 selectOption">
+          <select class="selectOption" (change)="onSelect($event.target.value)">
+            <option disabled>Stocks</option>
+            <option value="msci" selected="selected"> &nbsp;&nbsp; - &nbsp; MSCI All-Country World Equity Index</option>
+            <option disabled>commodity</option>
+            <option value="gold"> &nbsp;&nbsp; - &nbsp; Gold</option>
+            <option value="oil" disabled> &nbsp;&nbsp; - &nbsp; Crude Oil</option>
+          </select>
         </div>
-      <div class="inner">
-        <div class="row">
-          <div class="col-5 selectOption">
-              <select [disabled]="!hideChart2" class="selectOption" (change)="onSelect($event.target.value)">
-                  <option disabled>Stocks</option>  
-                  <option value="msci" selected="selected"> &nbsp;&nbsp; - &nbsp; MSCI All-Country World Equity Index</option>
-                  <option disabled>commodity</option>
-                  <option value="gold"> &nbsp;&nbsp; - &nbsp; Gold</option>
-                  <option value="oil"> &nbsp;&nbsp; - &nbsp; Crude Oil</option>
-                  </select>
+        <div class="addCompare1 col-md-6 btn_hov" style="cursor: pointer;">
+          <!-- (click)="addcompare()" -->
+          <h4  data-toggle="modal"  data-target="#comparisonModal" style="display: inline-block; margin-right: 10px;"> <i class="fa fa-plus-circle"></i> <samp>Comparison</samp></h4>
+          <samp>|</samp>
+          <h4 *ngFor="let value of removeArray" style="display: inline-block; margin-right: 5px; margin-left: 5px;" (click)="removeCompare(value)"> <i class="fa fa-minus-circle"></i> <samp>{{value}}</samp></h4>
+
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm-10">
+          <div id="container"></div>
+        </div>
+        <div class="col-sm-2" style="height: 400px; background-color:white; overflow-y: auto">
+          <div>
+            <div style="font-size: 12px; color:grey;">The Economic Times</div>
+            <div style="cursor: pointer;" class="btn_hov">
+              <h4 >Market Close: Sensex gains 155 pts, Nifty ends above 10,750</h4>
+              <p style="color:grey;">Never miss another great story! Get instant notifications...</p>
+            </div>
+            <p style="font-size: 12px; font-weight: 400; color:lightgrey;">2h ago</p>
           </div>
-          <div class="col addCompare1">
-            <button (click)="addcompare()">++Comparison</button>
-                  
+          <div>
+            <div style="font-size: 12px; color:grey;">Business Standard</div>
+            <div style="cursor: pointer;" class="btn_hov">
+              <h4 >Nifty, Sensex rise in global relief rally</h4>
+              <p style="color:grey;">(Reuters) - India shares rose on monday along with global market...</p>
+            </div>
+            <p style="font-size: 12px; font-weight: 400; color:lightgrey;">7h ago</p>
           </div>
-          <div class="col addCompare1">
-                 Comparison
+          <div>
+            <div style="font-size: 12px; color:grey;">The Economic Times</div>
+            <div style="cursor: pointer;" class="btn_hov">
+              <h4 >Market Close: Sensex gains 155 pts, Nifty ends above 10,750</h4>
+              <p style="color:grey;">Never miss another great story! Get instant notifications...</p>
+            </div>
+            <p style="font-size: 12px; font-weight: 400; color:lightgrey;">10h ago</p>
           </div>
         </div>
-        <div class="row myclass">
-          <div id="container" style="width:100%; height:100%" [hidden]="hideChart1"></div>
-          <div style="width:100%; height:100%; background-color: white; text-align: center" [hidden]="hideChart2">
-            <span class="pageHeadding">{{eventDetail}} </span>
-            <div style="margin: 15px" >
-              <p style="text-align: left">{{eventDescription}}</p>
+      </div>
+    </div>
+  </div>
+  <!-- Modal -->
+  <div class="modal fade" id="comparisonModal" role="dialog">
+    <div class="modal-dialog">
+
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Select from the following:</h4>
+        </div>
+        <div class="modal-body">
+          <div class="row">
+            <div *ngFor="let value of popupArray; let i = index" class="col-sm-12 btn_hov" style="cursor: pointer;" (click)="addcompare(value)" data-dismiss="modal">
+              <p style="font-size: 20px; font-weight: 600" >
+                <i class="fa fa-plus-circle"></i> 
+                <span style="margin-left:10px">{{value}}</span><span [ngStyle]="{color: returnColor(i)}">     ----- </span>
+              </p>
             </div>
           </div>
         </div>
-
+        <!--<div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>-->
       </div>
 
-
-
-      <div class="btn-group btn-group-toggle" style="margin-left: 10%;width: 150px; " data-toggle="buttons">
-          <label class="btn btn-secondary" [ngClass]="{active : !hideChart1}">
-            <input type="radio" name="options" id="option1" autocomplete="off"
-            (change)="hideChart1 = false; hideChart2 = true"> Chart
-          </label>
-          <label class="btn btn-secondary" [ngClass]="{active : !hideChart2}">
-            <input type="radio" name="options" id="option2" autocomplete="off"
-            (change)="hideChart2 = false; hideChart1 = true"> Details
-          </label>
-        </div>
-
-
+    </div>
   </div>
-
 </div>

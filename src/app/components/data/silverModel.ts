@@ -1,5 +1,5 @@
-export class FtseData {
-    public static ftseData = [
+export class SilverData {
+    public static silverData = [
       [Date.UTC(2017, 0 , 1 ),	3812.32],
       [Date.UTC(2017, 0 , 2 ),	3815.77],
       [Date.UTC(2017, 0 , 3 ),	3857.89],
