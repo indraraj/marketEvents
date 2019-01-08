@@ -34,6 +34,7 @@ export class DetailComponentComponent implements OnInit {
   public aluminiumData = AluminiumData.aluminiumData;
   public copperData = CopperData.copperData;
   public commodityOil = [];
+  public chartHeight;
 
   public popupArray = [];
   public removeArray = [];
@@ -42,8 +43,37 @@ export class DetailComponentComponent implements OnInit {
   public eventDetail: String;
   public chartObj: any = [{
     name: 'MSCI',
-    data: this.stockMsci
-  }];
+    data: this.stockMsci,
+    id: 'dataseries'
+  // the event marker flags
+}, {
+  type: 'flags',
+  data: [{
+    x: Date.UTC(2017, 11 , 6 ),
+    title: 'E',
+    text: 'Some event with a description'
+  }, {
+    x: Date.UTC(2017, 11 , 19),
+    title: 'E',
+    text: 'Some event with a long description'
+  }, {
+    x: Date.UTC(2017, 11 , 27),
+    title: 'E',
+    text: 'Some event with a very very long  description'
+  }],
+  color: Highcharts.getOptions().colors[0], // same as onSeries
+  fillColor: Highcharts.getOptions().colors[0],
+  onSeries: 'dataseries',
+  width: 16,
+  style: { // text style
+    color: 'white'
+  },
+  states: {
+    hover: {
+      fillColor: '#395C84' // darker
+    }
+  }
+}];
 
   /**
    * @constructor
@@ -64,6 +94,7 @@ export class DetailComponentComponent implements OnInit {
   ngOnInit() {
     this.popupArray.push('FTSE', 'Nikkei', 'S&P');
     this.plotChart(this.chartObj);
+    this.chartHeight = document.getElementById('chartContainer').clientHeight + 'px';
   }
   returnColor (i: number): string {
     if (i === 0) {
@@ -171,7 +202,8 @@ export class DetailComponentComponent implements OnInit {
     // Now create the chart
     const myChart = Highcharts.stockChart('container', {
       chart: {
-        type: 'line'
+        type: 'line',
+        height: '50%'
       },
       rangeSelector: {
         selected: 0,
@@ -186,9 +218,11 @@ export class DetailComponentComponent implements OnInit {
         }
       },
       tooltip: {
-        pointFormat: '<span style="color:{series.color}">{series.name}</span>: <b>{point.y}</b> ({point.change}%)<br/>',
-        valueDecimals: 2,
-        split: true
+        style: {
+          width: '200px'
+        },
+        valueDecimals: 4,
+        shared: true
       },
       series: plotData
     });
@@ -222,7 +256,6 @@ export class DetailComponentComponent implements OnInit {
     } else {
       //
     }
-    
   }
 
 
