@@ -10,6 +10,11 @@ import { GoldData } from '../data/goldModel';
 import { SilverData } from '../data/silverModel';
 import { AluminiumData } from '../data/aluminiumModel';
 import { CopperData } from '../data/copperModel';
+import { EuroData } from '../data/Euro';
+import { ChinaData } from '../data/china';
+import { Fid1Data } from '../data/Fid1';
+import { Fid2Data } from '../data/Fid2';
+
 
 
 Annotations(Highcharts);
@@ -25,14 +30,19 @@ Highcharts.createElement('link', {
   styleUrls: ['./detail-component.component.css']
 })
 export class DetailComponentComponent implements OnInit {
-  public stockMsci = MarketData.msciData;
+  public topixData = MarketData.msciData;
   public ftseData = FtseData.ftseData;
   public nikkeiData = NikkeiData.nikkeiData;
-  public spData = SPData.spData;
+  public dowJone = SPData.spData;
   public goldData = GoldData.goldData;
   public silverData = SilverData.silverData;
   public aluminiumData = AluminiumData.aluminiumData;
   public copperData = CopperData.copperData;
+  public euroData = EuroData.euroData;
+  public chinaData = ChinaData.chinaData;
+  public fid1Data = Fid1Data.fid1Data;
+  public fid2Data = Fid2Data.fid2Data;
+
   public commodityOil = [];
   public chartHeight;
 
@@ -42,24 +52,24 @@ export class DetailComponentComponent implements OnInit {
   public myChart: any;
   public eventDetail: String;
   public chartObj: any = [{
-    name: 'MSCI',
-    data: this.stockMsci,
+    name: 'Nikkei 225',
+    data: this.nikkeiData,
     id: 'dataseries'
   // the event marker flags
 }, {
   type: 'flags',
   data: [{
-    x: Date.UTC(2017, 11 , 6 ),
+    x: Date.UTC(2017, 6 , 24 ),
     title: 'E',
-    text: 'Some event with a description'
+    text: 'Result of the 2016 United Kingdom European Union member referendum'
   }, {
     x: Date.UTC(2017, 11 , 19),
     title: 'E',
-    text: 'Some event with a long description'
+    text: 'The Federal funds rate was lowered to zero percent.'
   }, {
-    x: Date.UTC(2017, 11 , 27),
+    x: Date.UTC(2017, 10 , 15),
     title: 'E',
-    text: 'Some event with a very very long  description'
+    text: 'Lehman Brothers Went Bankrupt after the Federal Reserve declined to gurantee its loans'
   }],
   color: Highcharts.getOptions().colors[0], // same as onSeries
   fillColor: Highcharts.getOptions().colors[0],
@@ -92,7 +102,7 @@ export class DetailComponentComponent implements OnInit {
    * @description Called on page refresh
    */
   ngOnInit() {
-    this.popupArray.push('FTSE', 'Nikkei', 'S&P');
+    this.popupArray.push('FTSE', 'Dow', 'Topix');
     this.plotChart(this.chartObj);
     this.chartHeight = document.getElementById('chartContainer').clientHeight + 'px';
   }
@@ -130,11 +140,20 @@ export class DetailComponentComponent implements OnInit {
         };
          break;
       }
-      case 'S&P': {
-        this.removeArray.push('S&P');
+      case 'Dow': {
+        this.removeArray.push('Dow');
         compareObj = {
-          name: 'S&P',
-          data: this.spData,
+          name: 'Dow',
+          data: this.dowJone,
+          color: 'purple'
+        };
+         break;
+      }
+      case 'Topix': {
+        this.removeArray.push('Topix');
+        compareObj = {
+          name: 'Topix',
+          data: this.topixData,
           color: 'orange'
         };
          break;
@@ -144,6 +163,51 @@ export class DetailComponentComponent implements OnInit {
         compareObj = {
           name: 'Silver',
           data: this.silverData,
+          color: 'lightgreen'
+        };
+         break;
+      }
+      case 'Eurozone GEAR': {
+        this.removeArray.push('Eurozone GEAR');
+        compareObj = {
+          name: 'Eurozone GEAR',
+          data: this.euroData,
+          color: 'lightgreen'
+        };
+         break;
+      }
+      case 'China GEAR': {
+        this.removeArray.push('China GEAR');
+        compareObj = {
+          name: 'China GEAR',
+          data: this.chinaData,
+          color: 'lightgreen'
+        };
+         break;
+      }
+      case 'FIJ IT JAPAN GROWTH FUND': {
+        this.removeArray.push('FIJ IT JAPAN GROWTH FUND');
+        compareObj = {
+          name: 'FIJ IT JAPAN GROWTH FUND',
+          data: this.fid1Data,
+          color: 'lightgreen'
+        };
+         break;
+      }
+      case 'FIJ IT US High Yield Fund': {
+        this.removeArray.push('FIJ IT US High Yield Fund');
+        compareObj = {
+          name: 'FIJ IT US High Yield Fund',
+          data: this.fid2Data,
+          color: 'lightgreen'
+        };
+         break;
+      }
+      case 'Gold': {
+        this.removeArray.push('Gold');
+        compareObj = {
+          name: 'Gold',
+          data: this.goldData,
           color: 'lightgreen'
         };
          break;
@@ -234,13 +298,40 @@ export class DetailComponentComponent implements OnInit {
    * @param userSelect User selection
    */
   onSelect(userSelect: string): void {
-    if (userSelect === 'msci') {
+    if (userSelect === 'nikkei') {
       this.popupArray = [];
       this.removeArray = [];
-      this.popupArray.push('FTSE', 'Nikkei', 'S&P');
+      this.popupArray.push('FTSE', 'Dow', 'Topix');
       this.chartObj = [{
-        name: 'MSCI',
-        data: this.stockMsci
+        name: 'Nikkei 225',
+        data: this.nikkeiData
+      }];
+      this.plotChart(this.chartObj);
+    } else if (userSelect === 'topix') {
+      this.popupArray = [];
+      this.removeArray = [];
+      this.popupArray.push('FTSE', 'Nikkei', 'Dow');
+      this.chartObj = [{
+        name: 'Topix',
+        data: this.topixData
+      }];
+      this.plotChart(this.chartObj);
+    } else if (userSelect === 'dow') {
+      this.popupArray = [];
+      this.removeArray = [];
+      this.popupArray.push('FTSE', 'Nikkei', 'Topix');
+      this.chartObj = [{
+        name: 'Dow',
+        data: this.dowJone
+      }];
+      this.plotChart(this.chartObj);
+    } else if (userSelect === 'ftse') {
+      this.popupArray = [];
+      this.removeArray = [];
+      this.popupArray.push('Dow', 'Nikkei', 'Topix');
+      this.chartObj = [{
+        name: 'FTSE',
+        data: this.ftseData
       }];
       this.plotChart(this.chartObj);
     } else if (userSelect === 'gold') {
@@ -251,6 +342,76 @@ export class DetailComponentComponent implements OnInit {
       this.chartObj = [{
         name: 'Gold',
         data: this.goldData
+      }];
+      this.plotChart(this.chartObj);
+    }  else if (userSelect === 'silver') {
+      this.popupArray = [];
+      this.removeArray = [];
+      this.popupArray.push('Gold', 'Copper', 'Aluminium');
+      console.log(this.popupArray[1]);
+      this.chartObj = [{
+        name: 'Silver',
+        data: this.silverData
+      }];
+      this.plotChart(this.chartObj);
+    } else if (userSelect === 'copper') {
+      this.popupArray = [];
+      this.removeArray = [];
+      this.popupArray.push('Gold', 'Silver', 'Aluminium');
+      console.log(this.popupArray[1]);
+      this.chartObj = [{
+        name: 'Copper',
+        data: this.copperData
+      }];
+      this.plotChart(this.chartObj);
+    } else if (userSelect === 'aluminium') {
+      this.popupArray = [];
+      this.removeArray = [];
+      this.popupArray.push('Gold', 'Silver', 'Copper');
+      console.log(this.popupArray[1]);
+      this.chartObj = [{
+        name: 'Aluminium',
+        data: this.aluminiumData
+      }];
+      this.plotChart(this.chartObj);
+    }    else if (userSelect === 'euro') {
+      this.popupArray = [];
+      this.removeArray = [];
+      this.popupArray.push('China GEAR');
+      console.log(this.popupArray[1]);
+      this.chartObj = [{
+        name: 'Eurozone GEAR',
+        data: this.euroData
+      }];
+      this.plotChart(this.chartObj);
+    } else if (userSelect === 'china') {
+      this.popupArray = [];
+      this.removeArray = [];
+      this.popupArray.push('Eurozone GEAR');
+      console.log(this.popupArray[1]);
+      this.chartObj = [{
+        name: 'China GEAR',
+        data: this.chinaData
+      }];
+      this.plotChart(this.chartObj);
+    } else if (userSelect === 'fid1') {
+      this.popupArray = [];
+      this.removeArray = [];
+      this.popupArray.push('FIJ IT US High Yield Fund');
+      console.log(this.popupArray[1]);
+      this.chartObj = [{
+        name: 'FIJ IT JAPAN GROWTH FUND',
+        data: this.fid1Data
+      }];
+      this.plotChart(this.chartObj);
+    } else if (userSelect === 'fid2') {
+      this.popupArray = [];
+      this.removeArray = [];
+      this.popupArray.push('FIJ IT JAPAN GROWTH FUND');
+      console.log(this.popupArray[1]);
+      this.chartObj = [{
+        name: 'FIJ IT US High Yield Fund',
+        data: this.fid2Data
       }];
       this.plotChart(this.chartObj);
     } else {

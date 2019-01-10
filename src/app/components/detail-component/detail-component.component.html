@@ -8,11 +8,28 @@
       <div class="row">
         <div class="col-md-6 selectOption">
           <select class="selectOption" (change)="onSelect($event.target.value)">
-            <option disabled>Stocks</option>
-            <option value="msci" selected="selected"> &nbsp;&nbsp; - &nbsp; MSCI All-Country World Equity Index</option>
+            <option disabled>Indices</option>
+            <option value="nikkei" selected="selected"> &nbsp;&nbsp; - &nbsp; Nikkei 225</option>
+            <option value="topix" > &nbsp;&nbsp; - &nbsp; Topix</option>
+            <option value="dow" > &nbsp;&nbsp; - &nbsp; DowJones</option>
+            <option value="ftse"> &nbsp;&nbsp; - &nbsp; FTSE</option>
+            <option value="jap" > &nbsp;&nbsp; - &nbsp; Japan Residential Property Price Index</option>
+
             <option disabled>commodity</option>
             <option value="gold"> &nbsp;&nbsp; - &nbsp; Gold</option>
+            <option value="silver"> &nbsp;&nbsp; - &nbsp; Silver</option>
+            <option value="copper"> &nbsp;&nbsp; - &nbsp; Copper</option>
+            <option value="aluminium"> &nbsp;&nbsp; - &nbsp; Aluminium</option>
             <option value="oil" disabled> &nbsp;&nbsp; - &nbsp; Crude Oil</option>
+
+            <option disabled>Blended Indices</option>
+            <option value="euro"> &nbsp;&nbsp; - &nbsp; Eurozone GEAR</option>
+            <option value="china"> &nbsp;&nbsp; - &nbsp; China GEAR</option>
+            
+            <option disabled>Fidelity Products</option>
+            <option value="fid1"> &nbsp;&nbsp; - &nbsp; FIJ IT JAPAN GROWTH FUND</option>
+            <option value="fid2"> &nbsp;&nbsp; - &nbsp; FIJ IT US High Yield Fund</option>
+            
           </select>
         </div>
         <div class="addCompare1 col-md-6 btn_hov" style="cursor: pointer;">
@@ -31,38 +48,38 @@
           <div style="border-bottom: 1px solid grey; margin-bottom:10px;">
             <span style="color:#1E8FF3; 
             font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
-            font-size: 16px; font-weight:bold">BSE SENSEX</span>
-            <h4 style="font-weight:bold">35,980.93</h4>
-            <p style="color:#1EA54B; font-weight:bold">+130.77(+0.36%)</p>
+            font-size: 16px; font-weight:bold">Nikkei 225</span>
+            <h4 style="font-weight:bold">20,141.93</h4>
+            <p style="color:#1EA54B; font-weight:bold">+285.13 (-1.40%)</p>
           </div>
           <div style="border-bottom: 1px solid grey; margin-bottom:10px;">
             <span style="color:#1E8FF3; 
             font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
-            font-size: 16px; font-weight:bold">BSE SENSEX</span>
-            <h4 style="font-weight:bold">35,980.93</h4>
-            <p style="color:#1EA54B; font-weight:bold">+130.77(+0.36%)</p>
+            font-size: 16px; font-weight:bold">TOPIX</span>
+            <h4 style="font-weight:bold">1,517.46</h4>
+            <p style="color:#1EA54B; font-weight:bold">+17.65 (1.15%)</p>
           </div>
           <div>
-            <div style="font-size: 12px; color:grey;">The Economic Times</div>
+            <div style="font-size: 12px; color:grey;">Fidelity Blog</div>
             <div style="cursor: pointer;" class="btn_hov">
-              <h4 >Market Close: Sensex gains 155 pts, Nifty ends above 10,750</h4>
-              <p style="color:grey;">Never miss another great story! Get instant notifications...</p>
+              <h4 >Italian political turmoil continues to take its toll</h4>
+              <p style="color:grey;">The Eurozone's 1.7 per cent reding reinforces the drop seen in the ...</p>
             </div>
             <p style="font-size: 12px; font-weight: 400; color:lightgrey;">2h ago</p>
           </div>
           <div>
-            <div style="font-size: 12px; color:grey;">Business Standard</div>
+            <div style="font-size: 12px; color:grey;">Fidelity Blog</div>
             <div style="cursor: pointer;" class="btn_hov">
-              <h4 >Nifty, Sensex rise in global relief rally</h4>
-              <p style="color:grey;">(Reuters) - India shares rose on monday along with global market...</p>
+              <h4 >China leads EM Gears lower</h4>
+              <p style="color:grey;">EM GESRs remain particularly weak, with China GEAR plunging further...</p>
             </div>
             <p style="font-size: 12px; font-weight: 400; color:lightgrey;">7h ago</p>
           </div>
           <div>
-            <div style="font-size: 12px; color:grey;">The Economic Times</div>
+            <div style="font-size: 12px; color:grey;">Fidelity Blog</div>
             <div style="cursor: pointer;" class="btn_hov">
-              <h4 >Market Close: Sensex gains 155 pts, Nifty ends above 10,750</h4>
-              <p style="color:grey;">Never miss another great story! Get instant notifications...</p>
+              <h4 >US GEAR strength contrasts with weakness elsewhere</h4>
+              <p style="color:grey;">US GEAR, in contrast to the other GEARs, continued its string run at 4.1 %...</p>
             </div>
             <p style="font-size: 12px; font-weight: 400; color:lightgrey;">10h ago</p>
           </div>
